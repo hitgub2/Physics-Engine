@@ -1,12 +1,17 @@
 import java.util.ArrayList;
 
 class Manager {
-	ArrayList<Thing> list;
-	private int num;
+	ArrayList<Thing> things;
+	ArrayList<Wall> walls;
+	private int numOfThings;
+	private int numOfWalls;
 	static Manager manager;
+	
 	private Manager(int capacity) {
-		list = new ArrayList<>(capacity);
-		num = 0;
+		things = new ArrayList<>(capacity);
+		walls = new ArrayList<>(capacity);
+		numOfThings = 0;
+		numOfWalls = 0;
 	}
 	public static Manager getInstance(int capacity) {
 		if(manager==null)
@@ -16,45 +21,72 @@ class Manager {
 	
 	//PUBLIC METHOD
 	public int getNumberOfThings() {
-		return this.num;
+		return this.numOfThings;
+	}
+	public int getNumberOfWalls() {
+		return this.numOfWalls;
 	}
 	public void addThing(Thing thing) {
-		list.add(thing);
-		num++;
+		things.add(thing);
+		numOfThings++;
+	}
+	public void addWall(Wall wall) {
+		walls.add(wall);
+		numOfWalls++;
 	}
 	public void removeThing(int index) {
-		if(num==0) {
+		if(numOfThings==0) {
 			System.out.println("Manager.removeThing) manager.list is empty.");
-		} else if(index>=num || index<0) {
+		} else if(index>=numOfThings || index<0) {
 			System.out.println("Manager.removeThing) out of boundary index.");
 		} else {
-			list.remove(index);
-			num--;
+			things.remove(index);
+			numOfThings--;
+		}
+	}
+	public void removeWall(int index) {
+		if(numOfWalls==0) {
+			System.out.println("Manager.removeThing) manager.list is empty.");
+		} else if(index>=numOfWalls || index<0) {
+			System.out.println("Manager.removeThing) out of boundary index.");
+		} else {
+			walls.remove(index);
+			numOfWalls--;
 		}
 	}
 	public Thing getThing(int index) {
-		if(num==0) {
+		if(numOfThings==0) {
 			System.out.println("Manager.getThing) manager.list is empty.");
 			return null;
-		} else if(index>=num || index<0) {
+		} else if(index>=numOfThings || index<0) {
 			System.out.println("Manager.getThing) out of boundary index.");
 			return null;
 		}
-		return list.get(index);
+		return things.get(index);
+	}
+	public Wall getWall(int index) {
+		if(numOfWalls==0) {
+			System.out.println("Manager.getWall) manager.walls is empty.");
+			return null;
+		} else if(index>=numOfWalls || index<0) {
+			System.out.println("Manager.getWall) out of boundary index.");
+			return null;
+		}
+		return walls.get(index);
 	}
 	public boolean isStop(int index) {
-		if(num==0) {
+		if(numOfThings==0) {
 			System.out.println("Manager.isStop) manager.list is empty.");
 			return false;
-		} else if(index>=num || index<0) {
+		} else if(index>=numOfThings || index<0) {
 			System.out.println("Manager.isStop) out of boundary index.");
 			return false;
 		}
-		return this.list.get(index).isStop();
+		return this.things.get(index).isStop();
 	}
 	
 	public void printInitialStates(int frame) {
-		for(int i=0; i<num; i++)
-			list.get(i).printCurrentState(frame);
+		for(int i=0; i<numOfThings; i++)
+			things.get(i).printCurrentState(frame);
 	}
 }

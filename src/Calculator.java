@@ -11,4 +11,8 @@ public abstract class Calculator {
 		double[] otherXY = other.getXY();
 		return (Math.pow(oneXY[0]-otherXY[0], 2) + Math.pow(oneXY[1]-otherXY[1], 2));
 	}
+	
+	public static double abs(double x) {
+		return x>=0 ? x : -x;
+	}
 }

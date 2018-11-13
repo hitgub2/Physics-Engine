@@ -39,7 +39,8 @@ abstract class Thing {
 		}
 	}
 	
-	public boolean isGroundCollision() {
+	//abstract로 바꾸기
+	public boolean isBounce(Wall wall) {
 		if(y[0]<=0) {
 			System.out.println(name + ") Ground collision!");
 			return true;
@@ -47,15 +48,16 @@ abstract class Thing {
 		return false;
 	}
 	
-	public void boundOnGround() {
+	public void bounce(Wall wall) {
 		y[0] *= -1d;
 		y[0] *= Settings.FRICTION_COEFF;
 		x[1] *= Settings.FRICTION_COEFF;
 		y[1] /= 2d;
 		y[1] *= -1d;
 	}
+	//abstract로 바꾸기
 	
-	public boolean isThingCollision(Thing other) {
+	public boolean isCollision(Thing other) {
 		double distance = Calculator.distance(this, other);
 		double charLenOne = charLength(other);
 		if(distance < charLenOne)
@@ -66,11 +68,12 @@ abstract class Thing {
 		return distance < charLenOne + charLenOther;
 	}
 	
-	public void collideOnThing(Thing other) {
+	public void collide(Thing other) {
 		System.out.println(name + ") Collision with " + other.name);
 		///*
 		System.out.println("Before collision, ");
-		System.out.printf("vel_%s = [%f, %f], vel_%s = [%f, %f]\n", this.name, this.x[1], this.y[1], other.name, other.x[1], other.y[1]);
+		System.out.printf("vel_%s = [%f, %f], vel_%s = [%f, %f]\n",
+				this.name, this.x[1], this.y[1], other.name, other.x[1], other.y[1]);
 		//*/
 		double totalMass = mass + other.mass;
 		double[] vel;
@@ -82,31 +85,42 @@ abstract class Thing {
 			vecOne[1] = vel[0];
 			vecOther[1] = vel[1];
 		}
+		if(other.stop) {
+			other.setStop();
+		}
 		///*
 		System.out.println("After collision, ");
-		System.out.printf("vel_%s = [%f, %f], vel_%s = [%f, %f]\n", this.name, this.x[1], this.y[1], other.name, other.x[1], other.y[1]);
+		System.out.printf("vel_%s = [%f, %f], vel_%s = [%f, %f]\n",
+				this.name, this.x[1], this.y[1], other.name, other.x[1], other.y[1]);
 		//*/
 	}
 
 	public void printCurrentState(int frame) {
-		System.out.printf("%s) frame=%d / pos = [%f, %f] \tvel = [%f, %f]\n", name, frame, x[0], y[0], x[1], y[1]);
+		System.out.printf("%s) frame=%d / pos = [%f, %f] \tvel = [%f, %f]\n",
+				name, frame, x[0], y[0], x[1], y[1]);
 	}
 
-	public boolean isStop() {
-		if(!stop
-				&& (Math.abs(y[0]) <= Settings.STOP_POSITION)
-				&& ((Math.abs(x[1]) <= Settings.STOP_VELOCITY)
-				&& (Math.abs(y[1]) <= Settings.STOP_VELOCITY))) {
+	/*
+	 * @return determine stop condition and return isStopped
+	 */
+	public boolean setStop() {
+		if((Math.abs(x[1]) <= Settings.STOP_VELOCITY) && (Math.abs(y[1]) <= Settings.STOP_VELOCITY)) {
 			stop = true;
 			System.out.println(name + ") stopped!");
 		}
+		return this.stop;
+	}
+	/*
+	 * @return the thing is currently stopped or not
+	 */
+	public boolean isStop() {
 		return this.stop;
 	}
 	
 	/*
 	 * getVector
 	 * @param i : itr
-	 * @return : the vector of x(i=0), y(i=1), z(i=2), and null otherwisei
+	 * @return : the vector of x(i=0), y(i=1), z(i=2), or null otherwise
 	 */
 	private double[] getVector(int i) {
 		switch(i) {

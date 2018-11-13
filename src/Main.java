@@ -9,25 +9,30 @@ public class Main {
 		
 		//INITIALIZE
 		int numberOfThings = manager.getNumberOfThings();
+		int nubmerOfWalls = manager.getNumberOfWalls();
 		int frame = 0;
 		manager.printInitialStates(frame); 
 		
 		//OPERATION
 		/*
-		 * 한번에 하나씩 충돌 가정
+		 * 한번에 하나씩 충돌 가정(2개 이상 동시 충돌 X)
 		 */
 		Thing thing;
+		Wall wall = null;
 		while(isContinue()) {
 			frame++;
 			for(int i=0; i<numberOfThings; i++) {
 				thing = manager.getThing(i);
-				if(!thing.isStop()) {
+				if(!thing.isStop() && !thing.setStop()) {
 					thing.nextMove();
-					if(thing.isGroundCollision())
-						thing.boundOnGround();
+//					for(int j=0; j<nubmerOfWalls; j++) {
+//						wall = manager.getWall(j);
+						if(thing.isBounce(wall))
+							thing.bounce(wall);
+//					}
 					for(int j=i+1; j<numberOfThings; j++) {
-						if(thing.isThingCollision(manager.getThing(j)))
-							thing.collideOnThing(manager.getThing(j));
+						if(thing.isCollision(manager.getThing(j)))
+							thing.collide(manager.getThing(j));
 					}
 					thing.printCurrentState(frame);
 				}
