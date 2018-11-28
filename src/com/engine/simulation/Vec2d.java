@@ -34,7 +34,7 @@ public class Vec2d implements Cloneable {
 	public void setY(float y) { this.y = y; }
 	
 	
-	//º»·¡ÀÇ º¤ÅÍ °ªÀ» °Çµå¸®Áö ¾Ê´Â ¿¬»ê
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Çµå¸®ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public Vec2d sum(Vec2d v1) {
 		return new Vec2d(this.x + v1.x, this.y + v1.y);
 	}
@@ -66,7 +66,7 @@ public class Vec2d implements Cloneable {
 		return center;
 	}
 	
-	//º»·¡ÀÇ º¤ÅÍ °ªÀ» °Çµå¸®´Â ¿¬»ê (void¸¦ ¿øÄ¢À¸·Î ÇÔ)
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Çµå¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (voidï¿½ï¿½ ï¿½ï¿½Ä¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
 	public void multiply(float k) {
 		this.x *= k;
 		this.y *= k;
@@ -96,6 +96,23 @@ public class Vec2d implements Cloneable {
 	
 	public void print() {
 		System.out.printf("%f %f\n",x, y);
+	}
+
+
+	public static float abs(float x) {
+		return x>=0 ? x : -x;
+	}
+
+	public static float vFunction(float theta) {
+		if(theta<0 || theta>3.1415927f)
+			theta %= 3.1415927f;
+
+		if(theta==0 || theta==3.1415927f)
+			return 0f;
+		else if(theta < 1.5707964f)
+			return (float)(Math.cos(theta));
+		else
+			return (float)(Math.cos(3.1415927f-theta));
 	}
 	
 	

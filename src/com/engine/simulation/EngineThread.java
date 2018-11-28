@@ -1,9 +1,6 @@
 package com.engine.simulation;
 
 import com.engine.Display;
-import com.engine.thing.Thing;
-import com.engine.wall.Wall;
-
 
 public class EngineThread extends Thread {
 	private long tLapse = 0;
@@ -16,7 +13,6 @@ public class EngineThread extends Thread {
 		this.manager = Manager.getInstance();
 	}
 
-	// æ≤∑πµÂ main
 	public void run() {
 		curT = System.currentTimeMillis();
 		while(Display.running) {
@@ -25,17 +21,16 @@ public class EngineThread extends Thread {
 			nextMove();
 		}
 	}
-	
-	// »Â∏• Ω√∞£ ∞ËªÍ
+
 	private void updateTime() {
 		lastT = curT;
 		curT = System.currentTimeMillis();
 		tLapse = (curT - lastT);
 		unitT = (tLapse / 300.0f);
 	}
-	
-	// π∞√º º”µµ ∞°º”«œ±‚
+
 	private synchronized void accelerate() {
+		/*
 		int size = manager.getNumberOfThings();
 		for(int i = 0; i < size; i++) {
 			Thing t = manager.getThing(i);
@@ -43,11 +38,12 @@ public class EngineThread extends Thread {
 			Vec2d newVel = new Vec2d(	oldVel.getX() + t.accX() * unitT,
 										oldVel.getY() + t.accY() * unitT);
 			t.setVel(newVel);
-		}
+		}*/
 	}	
 	
-	// º”µµø° ∏¬√Á π∞√º ¿Ãµø
+	// ÔøΩ”µÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ√º ÔøΩÃµÔøΩ
 	private synchronized void nextMove() {
+		/*
 		int numOfThings = manager.getNumberOfThings();
 		int numOfWalls = manager.getNumberOfWalls();
 		Thing thing;
@@ -57,16 +53,16 @@ public class EngineThread extends Thread {
 			Vec2d newPos = new Vec2d(	oldPos.getX() + thing.velX() * unitT,
 										oldPos.getY() + thing.velY() * unitT);
 			thing.setPos(newPos);
-			thing.setTheta((float)((thing.theta() + thing.angular() * unitT) % 6.2831855f)); //	6.2831855 = 2•
+			thing.setTheta((float)((thing.theta() + thing.angular() * unitT) % 6.2831855f)); //	6.2831855 = 2ÔøΩÔøΩ
 			
 			for(int j=0; j<numOfWalls; j++)
 				thing.bounce(manager.getWall(j));
 			for(int j=i+1; j<numOfThings; j++)
 				thing.collide(manager.getThing(j));
-		}
+		}*/
 	}
 	
-//	// ∫Æ∞˙ √Êµπ∞ÀªÁ
+//	// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÊµπÔøΩÀªÔøΩ
 //	private synchronized void isWallCollision(Thing t) {
 //		float maxX = Config.DP_WIDTH;
 //		float maxY = Config.DP_HEIGHT-30; // 30 size of bar

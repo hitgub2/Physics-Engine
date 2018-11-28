@@ -2,28 +2,16 @@ package com.engine.simulation;
 
 import java.util.ArrayList;
 
-import com.engine.thing.Thing;
-import com.engine.wall.Wall;
-
 public class Manager {
-	ArrayList<Thing> things;
-	ArrayList<Wall> walls;
 	private int numOfThings;
 	private int numOfWalls;
 	static Manager manager;
 
 	private static final int CAPACITY = 5;
 	private Manager() {
-		things = new ArrayList<>(CAPACITY);
-		walls = new ArrayList<>(CAPACITY);
 		numOfThings = 0;
 		numOfWalls = 0;
-		
-		//initial conditions
-		initialThings = new ArrayList<>(CAPACITY);
-		initialWalls = new ArrayList<>(CAPACITY);
-		initialNumOfThings = 0;
-		initialNumOfWalls = 0;
+
 	}
 	public static Manager getInstance() {
 		if(manager==null)
@@ -38,6 +26,7 @@ public class Manager {
 	public int getNumberOfWalls() {
 		return this.numOfWalls;
 	}
+	/*
 	public void addThing(Thing thing) {
 		things.add(thing);
 		numOfThings++;
@@ -122,7 +111,7 @@ public class Manager {
 			walls.get(i).set(initialWalls.get(i));
 		numOfThings = initialNumOfThings;
 		numOfWalls = initialNumOfWalls;
-	}
+	}*/
 	
 //	public void clear() {
 //		walls.clear();
