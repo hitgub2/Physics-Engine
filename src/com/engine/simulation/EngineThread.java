@@ -57,7 +57,7 @@ public class EngineThread extends Thread {
 			Vec2d newPos = new Vec2d(	oldPos.getX() + thing.velX() * unitT,
 										oldPos.getY() + thing.velY() * unitT);
 			thing.setPos(newPos);
-			thing.setTheta(thing.theta() + thing.angular() * unitT);
+			thing.setTheta((float)((thing.theta() + thing.angular() * unitT) % 6.2831855f)); //	6.2831855 = 2¥ð
 			
 			for(int j=0; j<numOfWalls; j++)
 				thing.bounce(manager.getWall(j));

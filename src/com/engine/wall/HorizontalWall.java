@@ -9,7 +9,7 @@ import com.engine.simulation.Config;
 import com.engine.simulation.Vec2d;
 import com.engine.thing.Thing;
 
-public class HorizontalWall extends Wall {
+public class HorizontalWall extends Wall implements Cloneable {
 	protected float y1;
 	protected HorizontalWall(String name) { super(name); }
 	public HorizontalWall(String name, float y1) {
@@ -22,7 +22,11 @@ public class HorizontalWall extends Wall {
 		super.set(other);
 		this.y1 = other.y1;
 	}
-
+	@Override
+	public Object clone() {
+		return super.clone();
+	}
+	
 	@Override
 	public boolean isToward(Vec2d pos, Vec2d vel) {
 		if(pos.getY()>=y1 && vel.getY()<0d)
@@ -47,7 +51,7 @@ public class HorizontalWall extends Wall {
 			pos.setY(y1 - charLength);
 		vel.setY(vel.getY() * (-Config.RESTITUTION_COEFF_WALL));
 		vel.setX(vel.getX() * Config.FRICTION_COEFF);
-		thing.setTheta(thing.angular() * -Config.RESTITUTION_COEFF_WALL_ANGULAR);
+		thing.setAngular(thing.angular() * -Calculator.vFunction(thing.theta()));
 	}
 
 	protected Line2D.Float shape;
@@ -55,7 +59,6 @@ public class HorizontalWall extends Wall {
 	public Shape drawShape() {
 		return shape;
 	}
-	
 }
 
 class DependentOfY extends HorizontalWall {

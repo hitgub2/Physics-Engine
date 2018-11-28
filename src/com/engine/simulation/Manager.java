@@ -88,23 +88,32 @@ public class Manager {
 	}
 	
 	//INITIAL CONDITIONS
+	private boolean isInitialized = false;
 	private int initialNumOfThings;
 	private int initialNumOfWalls;
 	private ArrayList<Thing> initialThings;
 	private ArrayList<Wall> initialWalls;
-//	public int getInitialNumberOfThings() {
-//		return this.initialNumOfThings;
-//	}
-//	public int getInitialNumberOfWalls() {
-//		return this.initialNumOfWalls;
-//	}
-	public void addInitialThing(Thing thing) {
-		initialThings.add(thing);
-		initialNumOfThings++;
+	public void setInitialConditions() {
+		if(!isInitialized) {
+			initialNumOfThings = numOfThings;
+			initialNumOfWalls = numOfWalls;
+			for(int i=0; i<initialNumOfThings; i++)
+				initialThings.add((Thing)things.get(i).clone());
+			for(int i=0; i<initialNumOfWalls; i++)
+				initialWalls.add((Wall)walls.get(i).clone());
+			isInitialized = true;
+		} else
+			System.out.println("All conditions are already initialized.");
 	}
-	public void addInitialWall(Wall wall) {
-		initialWalls.add(wall);
-		initialNumOfWalls++;
+	public void printInitialConditions() {
+		initialNumOfThings = numOfThings;
+		initialNumOfWalls = numOfWalls;
+		for(int i=0; i<initialNumOfThings; i++) {
+			Thing t = things.get(i);
+			System.out.println(t.getName() + ", pos = " + t.pos() + ", vel = " + t.vel() + ", acc = " + t.accX());
+		}
+		for(int i=0; i<initialNumOfWalls; i++)
+			System.out.println(walls.get(i).getName());
 	}
 	public synchronized void applyInitalConditions() {
 		for(int i=0; i<initialNumOfThings; i++)

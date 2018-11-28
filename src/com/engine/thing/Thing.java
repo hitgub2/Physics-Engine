@@ -1,5 +1,7 @@
 package com.engine.thing;
 
+import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Shape;
 
 import com.engine.simulation.Calculator;
@@ -7,7 +9,7 @@ import com.engine.simulation.Config;
 import com.engine.simulation.Vec2d;
 import com.engine.wall.Wall;
 
-public abstract class Thing {
+public abstract class Thing implements Cloneable {
 	final protected static int TYPE_NONE = 0;
 	final protected static int TYPE_CIRCLE = 1;
 	final protected static int TYPE_SQUARE = 2;
@@ -18,7 +20,7 @@ public abstract class Thing {
 	protected int type;
 	protected Vec2d pos, vel, acc;
 	protected float mass;
-	protected float theta;
+	protected float theta;		//radian
 	protected float angular;
 	protected float inertia;	//moment of inertia, https://ko.wikipedia.org/wiki/%EA%B4%80%EC%84%B1_%EB%AA%A8%EB%A9%98%ED%8A%B8
 //	private boolean isStop;
@@ -77,12 +79,31 @@ public abstract class Thing {
 		this.mass = other.mass;
 		this.inertia = other.inertia;
 	}
+	//clone
+	@Override
+	public Object clone() {
+		try {
+			Thing cloned = (Thing)super.clone();
+			cloned.pos = (Vec2d)this.pos.clone();
+			cloned.vel = (Vec2d)this.vel.clone();
+			cloned.acc = (Vec2d)this.acc.clone();
+			return cloned;
+		} catch(CloneNotSupportedException e) {
+			System.out.println("Cannot cloneable!");
+			return null;
+		}
+	}
+	
 	
 	//charLength
 	abstract protected float charLength(Thing other);
 	abstract protected float charLength(Wall wall);
 	//Shape
 	abstract public Shape fillShape();
+	abstract public void fill(Graphics2D g);
+	public int[] xs() { return null; }
+	public int[] ys() { return null; }
+	public Polygon getPolygon() { return null; }
 	
 	
 	
@@ -94,7 +115,7 @@ public abstract class Thing {
 		if(dist <= charLength) {
 //			System.out.println("bounce " + name + " on " + wall.getName());
 //			System.out.printf("vi = [%f, %f]\t", vel.getX(), vel.getY());
-			wall.bounce(this, charLength);	//앞서 구한 charLength
+			wall.bounce(this, charLength);
 //			System.out.printf("vf = [%f, %f]\n\n", vel.getX(), vel.getY());
 		}
 	}

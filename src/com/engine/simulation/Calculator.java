@@ -18,4 +18,15 @@ public abstract class Calculator {
 		return x>=0 ? x : -x;
 	}
 	
+	public static float vFunction(float theta) {
+		if(theta<0 || theta>3.1415927f)
+			theta %= 3.1415927f;
+		
+		if(theta==0 || theta==3.1415927f)
+			return 0f;
+		else if(theta < 1.5707964f)
+			return (float)(Math.cos(theta));
+		else
+			return (float)(Math.cos(3.1415927f-theta));
+	}
 }

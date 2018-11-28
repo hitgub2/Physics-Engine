@@ -1,6 +1,6 @@
 package com.engine.simulation;
 
-public class Vec2d {
+public class Vec2d implements Cloneable {
 	private float x;
 	private float y;
 	
@@ -14,11 +14,25 @@ public class Vec2d {
 		this.y = y;
 	}
 	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch(CloneNotSupportedException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "[" + x + ", " + y + "]";
+	}
+
 	//getter and setter
 	public float getX() { return x; }
 	public float getY() { return y; }
 	public void setX(float x) { this.x = x; }
 	public void setY(float y) { this.y = y; }
+	
 	
 	//본래의 벡터 값을 건드리지 않는 연산
 	public Vec2d sum(Vec2d v1) {
@@ -39,6 +53,17 @@ public class Vec2d {
 	}
 	public Vec2d unit(float norm) {
 		return new Vec2d(x / norm, y / norm);
+	}
+	public static Vec2d center(Vec2d... v) {
+		int size = v.length;
+		Vec2d center = new Vec2d(0f, 0f);
+		for(int i=0; i<size; i++) {
+			center.x += v[i].x;
+			center.y += v[i].y;
+		}
+		center.x /= size;
+		center.y /= size;
+		return center;
 	}
 	
 	//본래의 벡터 값을 건드리는 연산 (void를 원칙으로 함)

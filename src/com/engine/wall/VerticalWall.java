@@ -8,7 +8,7 @@ import com.engine.simulation.Config;
 import com.engine.simulation.Vec2d;
 import com.engine.thing.Thing;
 
-public class VerticalWall extends Wall {
+public class VerticalWall extends Wall implements Cloneable {
 	protected float x1;
 	protected VerticalWall(String name) { super(name); }
 	public VerticalWall(String name, float x1) {
@@ -20,6 +20,10 @@ public class VerticalWall extends Wall {
 	public void set(VerticalWall other) {
 		super.set(other);
 		this.x1 = other.x1;
+	}
+	@Override
+	public Object clone() {
+		return super.clone();
 	}
 
 	@Override
@@ -46,7 +50,7 @@ public class VerticalWall extends Wall {
 			pos.setX(x1 - charLength);
 		vel.setX(vel.getX() * (-Config.RESTITUTION_COEFF_WALL));
 		vel.setY(vel.getY() * Config.FRICTION_COEFF);
-		thing.setTheta(thing.angular() * -Config.RESTITUTION_COEFF_WALL_ANGULAR);
+		thing.setAngular(thing.angular() * -Calculator.vFunction(thing.theta()));
 	}
 
 	protected Line2D.Float shape;

@@ -5,7 +5,7 @@ import java.awt.Shape;
 import com.engine.simulation.Vec2d;
 import com.engine.thing.Thing;
 
-public abstract class Wall {
+public abstract class Wall implements Cloneable {
 	public final static int TYPE_NONE = 0;
 	public final static int TYPE_VERTICAL = 1;
 	public final static int TYPE_HORIZONTAL = 2;
@@ -21,6 +21,14 @@ public abstract class Wall {
 	public void set(Wall other) {
 		this.name = other.name;
 		this.type = other.type;
+	}
+	@Override
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch(CloneNotSupportedException e) {
+			return null;
+		}
 	}
 	public String getName() {
 		return this.name;

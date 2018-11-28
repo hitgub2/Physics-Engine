@@ -1,12 +1,13 @@
 package com.engine.thing;
 
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
 import com.engine.simulation.Vec2d;
 import com.engine.wall.Wall;
 
-public class Circle extends Thing {
+public class Circle extends Thing implements Cloneable {
 	protected float rad;
 	
 	public Circle(String name, Vec2d pos, Vec2d vel, Vec2d acc, float mass, float rad, float angular) {
@@ -19,6 +20,10 @@ public class Circle extends Thing {
 	public void set(Circle other) {
 		super.set(other);
 		this.rad = other.rad;
+	}
+	@Override
+	public Object clone() {
+		return super.clone();
 	}
 
 	@Override
@@ -36,5 +41,8 @@ public class Circle extends Thing {
 		shape.x = pos.getX() - rad;
 		shape.y = pos.getY() - rad;
 		return shape;
+	}
+	public void fill(Graphics2D g) {
+		shape
 	}
 }
