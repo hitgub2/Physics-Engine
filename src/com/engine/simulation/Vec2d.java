@@ -1,15 +1,15 @@
 package com.engine.simulation;
 
 public class Vec2d implements Cloneable {
-	private float x;
-	private float y;
+	private double x;
+	private double y;
 	
 	public Vec2d() {
-		x = 0.0f;
-		y = 0.0f;
+		x = 0.0;
+		y = 0.0;
 	}
 	
-	public Vec2d(float x, float y) {
+	public Vec2d(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -28,35 +28,35 @@ public class Vec2d implements Cloneable {
 	}
 
 	//getter and setter
-	public float getX() { return x; }
-	public float getY() { return y; }
-	public void setX(float x) { this.x = x; }
-	public void setY(float y) { this.y = y; }
+	public double getX() { return x; }
+	public double getY() { return y; }
+	public void setX(double x) { this.x = x; }
+	public void setY(double y) { this.y = y; }
 	
 	
-	//������ ���� ���� �ǵ帮�� �ʴ� ����
+	//create new instance
 	public Vec2d sum(Vec2d v1) {
 		return new Vec2d(this.x + v1.x, this.y + v1.y);
 	}
 	public Vec2d sub(Vec2d v1) {
 		return new Vec2d(this.x - v1.x, this.y - v1.y);
 	}
-	public float sqr() {
+	public double sqr() {
 		return x*x + y*y;
 	}
-	public float norm() {
-		return (float)Math.sqrt((double)sqr());
+	public double norm() {
+		return Math.sqrt(sqr());
 	}
 	public Vec2d unit() {
-		float norm = norm();
+		double norm = norm();
 		return unit(norm);
 	}
-	public Vec2d unit(float norm) {
+	public Vec2d unit(double norm) {
 		return new Vec2d(x / norm, y / norm);
 	}
 	public static Vec2d center(Vec2d... v) {
 		int size = v.length;
-		Vec2d center = new Vec2d(0f, 0f);
+		Vec2d center = new Vec2d(0, 0);
 		for(int i=0; i<size; i++) {
 			center.x += v[i].x;
 			center.y += v[i].y;
@@ -66,8 +66,8 @@ public class Vec2d implements Cloneable {
 		return center;
 	}
 	
-	//������ ���� ���� �ǵ帮�� ���� (void�� ��Ģ���� ��)
-	public void multiply(float k) {
+	//modify this instance
+	public void multiply(double k) {
 		this.x *= k;
 		this.y *= k;
 	}
@@ -75,9 +75,13 @@ public class Vec2d implements Cloneable {
 		this.x += v1.x;
 		this.y += v1.y;
 	}
+	public void add(double x, double y) {
+		this.x += x;
+		this.y += y;
+	}
 	
 	//get & set each component
-	public float getComponent(int itr) {
+	public double getComponent(int itr) {
 		switch(itr) {
 		case 0 : return this.x;
 		case 1 : return this.y;
@@ -85,11 +89,11 @@ public class Vec2d implements Cloneable {
 		default : return -1;
 		}
 	}
-	public void setComponent(int itr, float val) {
+	public void setComponent(int itr, double val) {
 		switch(itr) {
 		case 0 : this.x = val; break;
 		case 1 : this.y = val; break;
-//		case 2 : return this.z;
+//		case 2 : this.z = val; break;
 		default : return;
 		}
 	}
@@ -99,20 +103,20 @@ public class Vec2d implements Cloneable {
 	}
 
 
-	public static float abs(float x) {
+	public static double abs(double x) {
 		return x>=0 ? x : -x;
 	}
 
-	public static float vFunction(float theta) {
-		if(theta<0 || theta>3.1415927f)
-			theta %= 3.1415927f;
+	public static double vFunction(double theta) {
+		if(theta<0 || theta>Math.PI)
+			theta %= Math.PI;
 
-		if(theta==0 || theta==3.1415927f)
-			return 0f;
-		else if(theta < 1.5707964f)
-			return (float)(Math.cos(theta));
+		if(theta==0 || theta==Math.PI)
+			return 0;
+		else if(theta < Math.PI / 2)
+			return Math.cos(theta);
 		else
-			return (float)(Math.cos(3.1415927f-theta));
+			return -Math.cos(theta);
 	}
 	
 	

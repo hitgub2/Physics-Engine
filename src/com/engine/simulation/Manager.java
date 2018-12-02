@@ -2,16 +2,19 @@ package com.engine.simulation;
 
 import java.util.ArrayList;
 
+import com.engine.rigidbody.RigidBody;
+
 public class Manager {
-	private int numOfThings;
-	private int numOfWalls;
+	private ArrayList<RigidBody> rigidBodies;
+	private int nRigidBodies;
 	static Manager manager;
 
 	private static final int CAPACITY = 5;
 	private Manager() {
-		numOfThings = 0;
-		numOfWalls = 0;
-
+		nRigidBodies = 0;
+		initialNumOfRigidbodys = 0;
+		rigidBodies = new ArrayList<RigidBody>(CAPACITY);
+		initialRigidBodies = new ArrayList<RigidBody>(CAPACITY);
 	}
 	public static Manager getInstance() {
 		if(manager==null)
@@ -20,12 +23,45 @@ public class Manager {
 	}
 	
 	//PUBLIC METHOD
-	public int getNumberOfThings() {
-		return this.numOfThings;
+	public int getNumOfRigidBodies() {
+		return this.nRigidBodies;
 	}
-	public int getNumberOfWalls() {
-		return this.numOfWalls;
+	public synchronized RigidBody getRigidBody(int index) {
+		return rigidBodies.get(index);
 	}
+	public void addRigidBody(RigidBody rb) {
+		rigidBodies.add(rb);
+		nRigidBodies++;
+	}
+	public void removeRigidBody(int index) {
+		rigidBodies.remove(index);
+		nRigidBodies--;
+	}
+	public void removeRigidBody(RigidBody rb) {
+		rigidBodies.remove(rb);
+		nRigidBodies--;
+	}
+	
+	//INITIAL CONDITIONS
+	private boolean isInitialized = false;
+	private ArrayList<RigidBody> initialRigidBodies;
+	private int initialNumOfRigidbodys;
+	public void setInitialConditions() {
+		if(!isInitialized) {
+			initialNumOfRigidbodys = nRigidBodies;
+			for(int i=0; i<initialNumOfRigidbodys; i++)
+				initialRigidBodies.add((RigidBody)rigidBodies.get(i).clone());
+			isInitialized = true;
+		} else
+			System.out.println("All conditions are already initialized.");
+	}
+	public synchronized void applyInitalConditions() {
+		for(int i=0; i<initialNumOfRigidbodys; i++)
+			rigidBodies.get(i).set(initialRigidBodies.get(i));
+		nRigidBodies = initialNumOfRigidbodys;
+	}
+	
+	//plan to delete
 	/*
 	public void addThing(Thing thing) {
 		things.add(thing);

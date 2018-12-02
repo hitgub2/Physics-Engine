@@ -15,6 +15,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import com.engine.rigidbody.Circle;
+import com.engine.rigidbody.Polygon;
+import com.engine.rigidbody.RigidBody;
 import com.engine.simulation.Config;
 import com.engine.simulation.EngineThread;
 import com.engine.simulation.Manager;
@@ -68,7 +71,6 @@ public class Display extends Canvas implements Runnable, Config {
 	}
 	
 
-	// ���α׷� �ʱ�ȭ
 	private static void initialize() {
 		System.out.println(TITLE);
 		manager = Manager.getInstance();
@@ -94,8 +96,8 @@ public class Display extends Canvas implements Runnable, Config {
 				case KeyEvent.VK_1 :
 					if(!running)
 						return;
-					//manager.applyInitalConditions();
-					System.out.println("restart initial conditions");
+					manager.applyInitalConditions();
+					System.out.println("restart from initial conditions");
 					break;
 				}
 			}
@@ -155,8 +157,12 @@ public class Display extends Canvas implements Runnable, Config {
 		manager.addWall(new HorizontalWall("y = " + DP_BOTTOM, DP_BOTTOM));
 		manager.addWall(new VerticalWall("x = 0", 0));
 		manager.addWall(new VerticalWall("x = " + DP_RIGHT, DP_RIGHT));
+		
 		*/
-		//manager.setInitialConditions();
+		manager.addRigidBody(new Circle(	"A", new Vec2d(10, 10), new Vec2d(50, 0), gravitionalAcc, 0, 1, 1, 10));
+		manager.addRigidBody(new Polygon(	"B", new Vec2d(20, 10), new Vec2d(60, 0), gravitionalAcc, 0, 1, 1, new int[] {0, 20, 20, 0}, new int[] {0, 0, 20, 20}));
+		manager.addRigidBody(new Polygon(	"C", new Vec2d(500, 10), new Vec2d(-60, 0), gravitionalAcc, 0, 1, 1, new int[] {0, 30, 30, 0}, new int[] {0, 0, 20, 20}));
+		manager.setInitialConditions();
 //		manager.printInitialConditions();
 		display.start();
 	}
@@ -204,10 +210,17 @@ public class Display extends Canvas implements Runnable, Config {
 	
 	private void create_graphics() {
 		at = new AffineTransform();
-		int numOfThings, numOfWalls;
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, DP_WIDTH, DP_HEIGHT);
-
+		g2d.setColor(Color.BLACK);
+		// Draw things
+		int numOfRigidBodies = manager.getNumOfRigidBodies();
+		RigidBody rb;
+		g2d.setColor(Color.BLACK);
+		for (int i = 0; i < numOfRigidBodies; i++) {
+			rb = manager.getRigidBody(i);
+			rb.draw(g2d);
+		}
 
 		g = bs.getDrawGraphics();
 		g.drawImage(buffer, 0, 0, null);
