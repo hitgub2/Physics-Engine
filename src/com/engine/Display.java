@@ -127,7 +127,6 @@ public class Display extends Canvas implements Runnable, Config {
 		System.out.println("Objects Initialized");
 		Vec2d gravitionalAcc = new Vec2d(0, Config.GRAVITY);
 		/*
-		// thing, wall ����
 //		manager.addThing(new Circle("A", new Vec2d(400, 200), new Vec2d(30, 5), gravitionalAcc, 100, 20));
 //		manager.addThing(new Circle("B", new Vec2d(300, 200), new Vec2d(-20, 0), gravitionalAcc, 100, 20));
 //		manager.addThing(new Circle("C", new Vec2d(600, 300), new Vec2d(10, -5), gravitionalAcc, 100, 20));
