@@ -124,9 +124,16 @@ public class Display extends Canvas implements Runnable, Config {
 		System.out.println("Objects Initialized");
 		Vec2d gravitionalAcc = new Vec2d(0, Config.GRAVITY);
 
-		//manager.addRigidBody(new Circle(	"A", new Vec2d(400, 50), new Vec2d(-30, -30), gravitionalAcc, 0, 1, 1, 20));
-		manager.addRigidBody(new Polygon(	"B", new int[] {100, 140, 140, 100},	new int[] {100, 100, 140, 140},	new Vec2d(10, 0),	gravitionalAcc, 0, 0, 1));
-		manager.addRigidBody(new Polygon(	"D", new int[] {240, 280, 280, 240},	new int[] {100, 100, 140, 140},	new Vec2d(-10, 0),	gravitionalAcc, 0, 0, 1));
+		manager.addRigidBody(new Circle(	"A", new Vec2d(200, 50), new Vec2d(30, 0), gravitionalAcc, 0, 1, 1, 20));
+		manager.addRigidBody(new Circle(	"B", new Vec2d(400, 50), new Vec2d(-30, 0), gravitionalAcc, 0, 1, 1, 20));
+
+		manager.addRigidBody(new Polygon(	"C", new int[] {100, 140, 140, 100},	new int[] {100, 100, 140, 140},	new Vec2d(10, 0),	gravitionalAcc, Math.toRadians(30), 0, 1));
+		manager.addRigidBody(new Polygon(	"D", new int[] {240, 280, 280, 240},	new int[] {100, 100, 140, 140},	new Vec2d(-10, 0),	gravitionalAcc, Math.toRadians(30), 0, 1));
+
+		manager.addRigidBody(new Circle(	"E", new Vec2d(400, 100), new Vec2d(30, 0), gravitionalAcc, 0, 0, 1, 20));
+		manager.addRigidBody(new Polygon(	"F", new int[] {500, 540, 540, 500},	new int[] {100, 100, 140, 140},	new Vec2d(-30, 0),	gravitionalAcc, Math.toRadians(30), 0, 1));
+
+
 		//manager.addRigidBody(new Polygon(	"C", new int[] {0, 30, 30, 0}, 		new int[] {50, 50, 70, 70}, 	new Vec2d(60, -20),gravitionalAcc, 0, 1, 1));
 		manager.setInitialConditions();
 //		manager.printInitialConditions();

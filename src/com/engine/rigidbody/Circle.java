@@ -16,6 +16,7 @@ public class Circle extends RigidBody implements Cloneable {
 		this.dia = 2 * rad;
 
 	}
+
 	@Override
 	public void set(RigidBody other) {
 		try {
@@ -28,6 +29,8 @@ public class Circle extends RigidBody implements Cloneable {
 		}
 	}
 
+	public double rad() { return this.rad; }
+
 	@Override
 	public Object clone() {
 		Circle cloned = (Circle)super.clone();
@@ -35,7 +38,5 @@ public class Circle extends RigidBody implements Cloneable {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
-		g2d.fillOval((int)(pos.getX()-rad), (int)(pos.getY()-rad), (int)dia, (int)dia);
-	}
+	public void draw(Graphics2D g2d) { g2d.drawOval((int)(pos.getX()-rad), (int)(pos.getY()-rad), (int)dia, (int)dia); }
 }

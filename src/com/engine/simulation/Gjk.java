@@ -77,8 +77,6 @@ public class Gjk {
 
         switch (simplex.count) {
             case 1:
-                //point1 = simplex.vertexA.point1;
-                //point2 = simplex.vertexA.point2;
                 point1.set(simplex.vertexA.point1);
                 point2.set(simplex.vertexA.point2);
                 break;
@@ -86,12 +84,10 @@ public class Gjk {
             case 2:
                 Vec2d uA1 = simplex.vertexA.point1.mul(s * simplex.vertexA.u);
                 Vec2d uB1 = simplex.vertexB.point1.mul(s * simplex.vertexB.u);
-                //point1 = uA1.sum(uB1);
                 point1.set(uA1.sum(uB1));
 
                 Vec2d uA2 = simplex.vertexA.point2.mul(s * simplex.vertexA.u);
                 Vec2d uB2 = simplex.vertexB.point2.mul(s * simplex.vertexB.u);
-                //point2 = uA2.sum(uB2);
                 point2.set(uA2.sum(uB2));
                 break;
 
@@ -99,8 +95,6 @@ public class Gjk {
                 Vec2d uA = simplex.vertexA.point1.mul(s * simplex.vertexA.u);
                 Vec2d uB = simplex.vertexB.point1.mul(s * simplex.vertexB.u);
                 Vec2d uC = simplex.vertexC.point1.mul(s * simplex.vertexC.u);
-                //point1 = uA.sum(uB.sum(uC));
-                //point2 = point1;
                 point1.set(uA.sum(uB).sum(uC));
                 point2.set(point1);
                 break;
@@ -154,14 +148,14 @@ public class Gjk {
         final double uCA = Q.sub(A).dot(C.sub(A));
         final double vCA = Q.sub(C).dot(A.sub(C));
 
-        if (vAB <= 0.0f && uCA <= 0.0f) {
+        if (vAB <= 0.0 && uCA <= 0.0) {
             simplex.vertexA.u = 1.0;
             simplex.divisor = 1.0;
             simplex.count = 1;
             return;
         }
 
-        if (uAB <= 0.0f && vBC <= 0.0f) {
+        if (uAB <= 0.0 && vBC <= 0.0) {
             simplex.vertexA = simplex.vertexB.clone();
             simplex.vertexA.u = 1.0;
             simplex.divisor = 1.0;
@@ -169,7 +163,7 @@ public class Gjk {
             return;
         }
 
-        if (uBC <= 0.0f && vCA <= 0.0f) {
+        if (uBC <= 0.0 && vCA <= 0.0) {
             simplex.vertexA = simplex.vertexC.clone();
             simplex.vertexA.u = 1.0;
             simplex.divisor = 1.0;
@@ -183,7 +177,7 @@ public class Gjk {
         final double vABC = C.sub(Q).cross(A.sub(Q));
         final double wABC = A.sub(Q).cross(B.sub(Q));
 
-        if (uAB > 0.0f && vAB > 0.0f && wABC * area <= 0.0f) {
+        if (uAB > 0.0 && vAB > 0.0 && wABC * area <= 0.0) {
             simplex.vertexA.u = uAB;
             simplex.vertexB.u = vAB;
             Vec2d e = B.sub(A);
@@ -192,7 +186,7 @@ public class Gjk {
             return;
         }
 
-        if (uBC > 0.0f && vBC > 0.0f && uABC * area <= 0.0f) {
+        if (uBC > 0.0 && vBC > 0.0 && uABC * area <= 0.0) {
             simplex.vertexA = simplex.vertexB.clone();
             simplex.vertexB = simplex.vertexC.clone();
 
@@ -204,7 +198,7 @@ public class Gjk {
             return;
         }
 
-        if (uCA > 0.0f && vCA > 0.0f && vABC * area <= 0.0f) {
+        if (uCA > 0.0 && vCA > 0.0 && vABC * area <= 0.0) {
             simplex.vertexB = simplex.vertexA.clone();
             simplex.vertexA = simplex.vertexC.clone();
 
@@ -226,8 +220,6 @@ public class Gjk {
     public final Output distance(final int[] xA, final int[] yA, final int[] xB, final int[] yB) {
         Output output = new Output();
         Simplex simplex = new Simplex();
-
-
 
         int[] save1 = new int[3];
         int[] save2 = new int[3];
@@ -323,11 +315,15 @@ public class Gjk {
     }
 
 
-
+    // Collisiion detecting methods
     public boolean collisionPP(Polygon a, Polygon b) {
         Gjk.Output output = new Gjk().distance(a.getX(), a.getY(), b.getX(), b.getY());
 
         if(output.distance == 0.0) {
+            a.printVertices();
+            b.printVertices();
+            output.point1.print();
+            output.point2.print();
             return true;
         }
         else {
@@ -336,13 +332,27 @@ public class Gjk {
     }
 
     public boolean collisionPC(Polygon a, Circle b) {
+        int[] circleX = {(int)b.posX()};
+        int[] circleY = {(int)b.posY()};
 
-        return false;
+        Gjk.Output output = new Gjk().distance(a.getX(), a.getY(), circleX, circleY);
+
+
+        if(output.distance <= b.rad()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean collisionCC(Circle a, Circle b) {
-
-        return false;
+        double distance = a.pos().distance(b.pos());
+        double cond = a.rad() + b.rad();
+        if(distance <= cond) {
+            return true;
+        }
+        else return false;
     }
 
     public boolean collision(RigidBody a, RigidBody b) {
