@@ -32,6 +32,7 @@ public class Vec2d implements Cloneable {
 	public double getY() { return y; }
 	public void setX(double x) { this.x = x; }
 	public void setY(double y) { this.y = y; }
+	public void set(Vec2d v) { this.x = v.x; this.y = v.y; }
 
 	//create new instance
 	public Vec2d sum(Vec2d v1) {
@@ -66,12 +67,22 @@ public class Vec2d implements Cloneable {
 		center.y /= len;
 		return center;
 	}
+	public Vec2d negate() { return new Vec2d(-this.x, -this.y); }
+	public double dot(Vec2d other) { return this.x*other.x+this.y*other.y; }
+	public Vec2d mul(double k) { return new Vec2d(this.x*k, this.y*k); }
+	public double distance(Vec2d other) { return Math.sqrt( (this.x-other.x)*(this.x-other.x) + (this.y-other.y)*(this.y-other.y) ); }
+
+	public double cross(Vec2d other) { return this.x*other.y - y*other.x; }
+	public Vec2d cross_f(double s) { return new Vec2d(s+this.y, -s*this.x); }
+	public Vec2d cross_s(double s) { return new Vec2d(-s+this.y, s*this.x); }
+
+
 
 	//modify this instance
-	public void multiply(double k) {
-		this.x *= k;
-		this.y *= k;
-	}
+	//public void mul(double k) {
+	//	this.x *= k;
+	//	this.y *= k;
+	//}
 	public void add(Vec2d v1) {
 		this.x += v1.x;
 		this.y += v1.y;
@@ -117,4 +128,5 @@ public class Vec2d implements Cloneable {
 		else
 			return -Math.cos(theta);
 	}
+
 }

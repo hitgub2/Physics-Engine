@@ -14,6 +14,11 @@ abstract public class RigidBody implements Cloneable {
 	protected double mass;
 	protected double inertia;
 	protected boolean isFixed;
+	protected int type;
+
+	final protected static int TYPE_NONE = 0;
+	final protected static int TYPE_CIRCLE = 1;
+	final protected static int TYPE_POLYGON = 2;
 
 	protected RigidBody(String name, Vec2d pos, Vec2d vel, Vec2d acc, double theta, double angular, double mass) {
 		this.name = name;
@@ -24,7 +29,9 @@ abstract public class RigidBody implements Cloneable {
 		this.angular = angular;
 		this.mass = mass;
 		isFixed = false;
+		this.type = 0;
 	}
+
 	public void set(RigidBody other) {
 		this.pos = (Vec2d)other.pos.clone();
 		this.vel = (Vec2d)other.vel.clone();
@@ -50,6 +57,7 @@ abstract public class RigidBody implements Cloneable {
 	public double mass() { return this.mass; }
 	public String getName() { return this.name; }
 	public boolean isFixed() { return this.isFixed; }
+	public int type() { return this.type; }
 	//setter
 	public void setPos(Vec2d newPos) { this.pos = newPos; }
 	public void setPosX(double x) { this.pos.setX(x); }

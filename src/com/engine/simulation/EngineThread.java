@@ -1,6 +1,7 @@
 package com.engine.simulation;
 
 import com.engine.Display;
+import com.engine.rigidbody.Polygon;
 import com.engine.rigidbody.RigidBody;
 
 public class EngineThread extends Thread {
@@ -47,8 +48,10 @@ public class EngineThread extends Thread {
 			rigidBody.pos().add(rigidBody.velX() * unitT, rigidBody.velY() * unitT);
 			rigidBody.setTheta((rigidBody.theta() + rigidBody.angular() * unitT) % (2 * Math.PI));
 
-//			for(int j=i+1; j<nRigidBodies; j++)
-//				rigidBody.collide(manager.getThing(j));
+			for(int j=i+1; j<nRigidBodies; j++) {
+				RigidBody other = manager.getRigidBody(j);
+
+			}
 		}
 	}
 

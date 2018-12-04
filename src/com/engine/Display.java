@@ -18,10 +18,7 @@ import javax.swing.JFrame;
 import com.engine.rigidbody.Circle;
 import com.engine.rigidbody.Polygon;
 import com.engine.rigidbody.RigidBody;
-import com.engine.simulation.Config;
-import com.engine.simulation.EngineThread;
-import com.engine.simulation.Manager;
-import com.engine.simulation.Vec2d;
+import com.engine.simulation.*;
 
 public class Display extends Canvas implements Runnable, Config {
 	// Threads
@@ -158,10 +155,13 @@ public class Display extends Canvas implements Runnable, Config {
 
 
 		manager.addRigidBody(new Circle(	"A", new Vec2d(400, 50), new Vec2d(-30, -30), gravitionalAcc, 0, 1, 1, 20));
-//		manager.addRigidBody(new Polygon(	"B", new int[] {100, 120, 120, 100},	new int[] {100, 100, 120, 120},	new Vec2d(20, 0),	gravitionalAcc, 0, 1, 1));
-//		manager.addRigidBody(new Polygon(	"C", new int[] {0, 30, 30, 0}, 			new int[] {50, 50, 70, 70}, 	new Vec2d(60, -20),	gravitionalAcc, 0, 1, 1));
+		manager.addRigidBody(new Polygon(	"B", new int[] {100, 120, 120, 100},	new int[] {100, 100, 120, 120},	new Vec2d(20, 0),	gravitionalAcc, 0, 1, 1));
+		manager.addRigidBody(new Polygon(	"C", new int[] {0, 30, 30, 0}, 			new int[] {50, 50, 70, 70}, 	new Vec2d(60, -20),	gravitionalAcc, 0, 1, 1));
 		manager.setInitialConditions();
 //		manager.printInitialConditions();
+
+
+
 		display.start();
 	}
 
@@ -220,11 +220,37 @@ public class Display extends Canvas implements Runnable, Config {
 			rb.draw(g2d);
 		}
 
+		int[] xA = new int[] {70, 120, 120, 100};
+		int[] yA = new int[] {70, 100, 120, 120};
+
+		g2d.drawPolygon(xA, yA, 4);
+		int[] xB = new int[] {0, 30, 30, 0};
+		int[] yB = new int[] {50, 50, 70, 70};
+		g2d.drawPolygon(xB, yB, 4);
+
+		Gjk.Output output = new Gjk().distance(xA, yA, xB, yB);
+
+		g2d.drawLine((int)output.point1.getX(), (int)output.point1.getY(), (int)output.point2.getX(), (int)output.point2.getY());
+
+
+
 		g = bs.getDrawGraphics();
 		g.drawImage(buffer, 0, 0, null);
 	}
 
 	public static void main (String[] args) {
 		initialize();
+
+		int[] xA = new int[] {100, 120, 120, 100};
+		int[] yA = new int[] {100, 100, 120, 120};
+
+//		g2d.drawPolygon(xA, yA, 4);
+		int[] xB = new int[] {0, 30, 30, 0};
+		int[] yB = new int[] {50, 50, 70, 70};
+//		g2d.drawPolygon(xB, yB, 4);
+		Gjk.Output output = new Gjk().distance(xA, yA, xB, yB);
+
+//		g2d.drawLine((int)output.point1.getX(), (int)output.point1.getY(), (int)output.point2.getX(), (int)output.point2.getY());
+
 	}
 }
