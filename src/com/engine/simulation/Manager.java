@@ -21,7 +21,7 @@ public class Manager {
 			manager = new Manager();
 		return manager;
 	}
-	
+
 	//PUBLIC METHOD
 	public int getNumOfRigidBodies() {
 		return this.nRigidBodies;
@@ -41,7 +41,7 @@ public class Manager {
 		rigidBodies.remove(rb);
 		nRigidBodies--;
 	}
-	
+
 	//INITIAL CONDITIONS
 	private boolean isInitialized = false;
 	private ArrayList<RigidBody> initialRigidBodies;
@@ -60,7 +60,7 @@ public class Manager {
 			rigidBodies.get(i).set(initialRigidBodies.get(i));
 		nRigidBodies = initialNumOfRigidbodys;
 	}
-	
+
 	//plan to delete
 	/*
 	public void addThing(Thing thing) {
@@ -148,7 +148,7 @@ public class Manager {
 		numOfThings = initialNumOfThings;
 		numOfWalls = initialNumOfWalls;
 	}*/
-	
+
 //	public void clear() {
 //		walls.clear();
 //		things.clear();
@@ -166,7 +166,7 @@ public class Manager {
 //		}
 //		return this.things.get(index).isStop();
 //	}
-	
+
 //	public void printInitialStates(int frame) {
 //		for(int i=0; i<numOfThings; i++)
 //			things.get(i).printCurrentState(frame);

@@ -3,17 +3,17 @@ package com.engine.simulation;
 public class Vec2d implements Cloneable {
 	private double x;
 	private double y;
-	
+
 	public Vec2d() {
 		x = 0.0;
 		y = 0.0;
 	}
-	
+
 	public Vec2d(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -32,8 +32,7 @@ public class Vec2d implements Cloneable {
 	public double getY() { return y; }
 	public void setX(double x) { this.x = x; }
 	public void setY(double y) { this.y = y; }
-	
-	
+
 	//create new instance
 	public Vec2d sum(Vec2d v1) {
 		return new Vec2d(this.x + v1.x, this.y + v1.y);
@@ -54,18 +53,20 @@ public class Vec2d implements Cloneable {
 	public Vec2d unit(double norm) {
 		return new Vec2d(x / norm, y / norm);
 	}
-	public static Vec2d center(Vec2d... v) {
-		int size = v.length;
+	public static Vec2d center(int[] x, int[] y) {
+		return center(x, y, x.length);
+	}
+	public static Vec2d center(int[] x, int[] y, int len) {
 		Vec2d center = new Vec2d(0, 0);
-		for(int i=0; i<size; i++) {
-			center.x += v[i].x;
-			center.y += v[i].y;
+		for(int i=0; i<len; i++) {
+			center.x += x[i];
+			center.y += y[i];
 		}
-		center.x /= size;
-		center.y /= size;
+		center.x /= len;
+		center.y /= len;
 		return center;
 	}
-	
+
 	//modify this instance
 	public void multiply(double k) {
 		this.x *= k;
@@ -79,29 +80,27 @@ public class Vec2d implements Cloneable {
 		this.x += x;
 		this.y += y;
 	}
-	
+
 	//get & set each component
 	public double getComponent(int itr) {
 		switch(itr) {
-		case 0 : return this.x;
-		case 1 : return this.y;
-//		case 2 : return this.z;
-		default : return -1;
+			case 0 : return this.x;
+			case 1 : return this.y;
+			default : return -1;
 		}
 	}
+
 	public void setComponent(int itr, double val) {
 		switch(itr) {
-		case 0 : this.x = val; break;
-		case 1 : this.y = val; break;
-//		case 2 : this.z = val; break;
-		default : return;
+			case 0 : this.x = val; break;
+			case 1 : this.y = val; break;
+			default : return;
 		}
 	}
-	
+
 	public void print() {
 		System.out.printf("%f %f\n",x, y);
 	}
-
 
 	public static double abs(double x) {
 		return x>=0 ? x : -x;
@@ -118,6 +117,4 @@ public class Vec2d implements Cloneable {
 		else
 			return -Math.cos(theta);
 	}
-	
-	
 }

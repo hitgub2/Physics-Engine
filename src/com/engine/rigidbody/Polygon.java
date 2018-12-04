@@ -15,10 +15,10 @@ public class Polygon extends RigidBody implements Cloneable {
 		this.yi = yi;
 		nVertices = xi.length;
 		inertia = 1d;
-		
+
 		x = new int[nVertices];
 		y = new int[nVertices];
-    }
+	}
 	@Override
 	public void set(RigidBody other) {
 		try {
@@ -31,7 +31,7 @@ public class Polygon extends RigidBody implements Cloneable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public Object clone() {
 		Polygon polygon = (Polygon)super.clone();
@@ -48,8 +48,8 @@ public class Polygon extends RigidBody implements Cloneable {
 		double sin = Math.sin(theta);
 		double cos = Math.cos(theta);
 		for(int i=0; i<nVertices; i++) {
-		   x[i] = (int)pos.getX() + (int)(cos * xi[i] + sin * yi[i]);
-		   y[i] = (int)pos.getY() + (int)(-sin * xi[i] + cos * yi[i]);
+			x[i] = (int)pos.getX() + (int)(cos * xi[i] + sin * yi[i]);
+			y[i] = (int)pos.getY() + (int)(-sin * xi[i] + cos * yi[i]);
 		}
 		g2d.fillPolygon(x, y, nVertices);
 	}

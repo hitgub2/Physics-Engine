@@ -7,7 +7,7 @@ import com.engine.simulation.Vec2d;
 public class Circle extends RigidBody implements Cloneable {
 	private double rad;
 	private double dia;
-	
+
 	public Circle(String name, Vec2d pos, Vec2d vel, Vec2d acc, double theta, double angular, double mass, double rad) {
 		super(name, pos, vel, acc, theta, angular, mass);
 		this.rad = rad;
