@@ -48,30 +48,32 @@ public class Polygon extends RigidBody implements Cloneable {
 		return polygon;
 	}
 
-
 	private int[] x;	//current verctices x location
 	private int[] y;	//current verctices y location
-	@Override
-	public void draw(Graphics2D g2d) {
+
+	public void setCurrentVertex() {
 		double sin = Math.sin(theta);
 		double cos = Math.cos(theta);
 		for(int i=0; i<nVertices; i++) {
 			x[i] = (int)pos.getX() + (int)(cos * xi[i] + sin * yi[i]);
 			y[i] = (int)pos.getY() + (int)(-sin * xi[i] + cos * yi[i]);
 		}
+	}
+
+	@Override
+	public void draw(Graphics2D g2d) {
+		setCurrentVertex();
 		g2d.drawPolygon(x, y, nVertices);
 	}
 
-	public int[] getX() { return this.x; }
-	public int[] getY() { return this.y; }
+	public int[] getX() { setCurrentVertex(); return this.x; }
+	public int[] getY() { setCurrentVertex(); return this.y; }
+	public int getnVertices() { return  this.nVertices; }
 
-	@Override
-	public void move(Vec2d t) {
-		int mx = (int)t.getX();
-		int my = (int)t.getY();
-		for(int i = 0; i < nVertices; i++) {
-			x[i] += mx;
-			y[i] += my;
+	public void printVertices() {
+		for(int i = 0; i < this.getnVertices(); i++) {
+			System.out.printf("(%d, %d)  ", this.getX()[i], this.getY()[i]);
 		}
+		System.out.printf("\n");
 	}
 }

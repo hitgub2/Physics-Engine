@@ -124,36 +124,6 @@ public class Display extends Canvas implements Runnable, Config {
 		System.out.println("Objects Initialized");
 		Vec2d gravitionalAcc = new Vec2d(0, Config.GRAVITY);
 
-//		manager.addThing(new Circle("A", new Vec2d(400, 200), new Vec2d(30, 5), gravitionalAcc, 100, 20));
-//		manager.addThing(new Circle("B", new Vec2d(300, 200), new Vec2d(-20, 0), gravitionalAcc, 100, 20));
-//		manager.addThing(new Circle("C", new Vec2d(600, 300), new Vec2d(10, -5), gravitionalAcc, 100, 20));
-//		manager.addThing(new Circle("D", new Vec2d(500, 300), new Vec2d(-10, -10), gravitionalAcc, 100, 20));
-//
-//		manager.addThing(new Circle("A", new Vec2d(150, 200), new Vec2d(20, 5), gravitionalAcc, 50, 5));
-//		manager.addThing(new Circle("B", new Vec2d(100, 200), new Vec2d(-50, 0), gravitionalAcc, 100, 13));
-//		manager.addThing(new Circle("C", new Vec2d(400, 300), new Vec2d(60, -5), gravitionalAcc, 50, 15));
-//		manager.addThing(new Circle("D", new Vec2d(150, 300), new Vec2d(-90, -10), gravitionalAcc, 100, 20));
-//		manager.addThing(new Circle("E", new Vec2d(10, 20), new Vec2d(90, 30), gravitionalAcc, 70, 10));
-//
-//		manager.addThing(new Circle		("A", new Vec2d(100, 20), 	new Vec2d(50, 10), 		gravitionalAcc, 1, 35, 1.0f));
-//		manager.addThing(new Rectangle	("B", new Vec2d(200, 30), 	new Vec2d(0, -10), 		gravitionalAcc, 2, 10, 20, 0.5f));
-//		manager.addThing(new Rectangle	("C", new Vec2d(300, 20), 	new Vec2d(120,  10), 	gravitionalAcc, 1, 20, 15, 0.5f));
-//		manager.addThing(new Circle		("D", new Vec2d(400, 40), 	new Vec2d(140, -10), 	gravitionalAcc, 3, 30, 0.6f));
-//		manager.addThing(new Rectangle	("E", new Vec2d(200, 400), 	new Vec2d(20,  -80), 	gravitionalAcc, 2, 40, 10, 0.2f));
-//
-//		//create things
-//		manager.addThing(new Circle		("A", new Vec2d(100, 20), 	new Vec2d(50, 10), 		gravitionalAcc, 70, 15, 0.1f));
-//		manager.addThing(new Rectangle	("B", new Vec2d(300, 20), 	new Vec2d( 120,  10), 	gravitionalAcc, 70, 55, 60, 1f));
-//		manager.addThing(new Circle		("C", new Vec2d(400, 40), 	new Vec2d( 140, -10), 	gravitionalAcc, 70, 25, 0.2f));
-//		manager.addThing(new Rectangle	("D", new Vec2d(500, 400), 	new Vec2d(-160,  -80),	gravitionalAcc, 70, 30, 25, 2f));
-//		manager.addThing(new Triangle	("G", new Vec2d(100, 100), new Vec2d(120, 100), new Vec2d(100, 120), new Vec2d(0, 1), new Vec2d(0, 1), 70, 0.2f));
-//
-//		//create walls
-//		manager.addWall(new HorizontalWall("y = " + DP_BOTTOM, DP_BOTTOM));
-//		manager.addWall(new VerticalWall("x = 0", 0));
-//		manager.addWall(new VerticalWall("x = " + DP_RIGHT, DP_RIGHT));
-
-
 		//manager.addRigidBody(new Circle(	"A", new Vec2d(400, 50), new Vec2d(-30, -30), gravitionalAcc, 0, 1, 1, 20));
 		manager.addRigidBody(new Polygon(	"B", new int[] {100, 140, 140, 100},	new int[] {100, 100, 140, 140},	new Vec2d(10, 0),	gravitionalAcc, 0, 0, 1));
 		manager.addRigidBody(new Polygon(	"D", new int[] {240, 280, 280, 240},	new int[] {100, 100, 140, 140},	new Vec2d(-10, 0),	gravitionalAcc, 0, 0, 1));
