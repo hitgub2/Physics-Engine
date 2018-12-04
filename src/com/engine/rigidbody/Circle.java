@@ -39,4 +39,9 @@ public class Circle extends RigidBody implements Cloneable {
 		g2d.fillOval((int)(pos.getX()-rad), (int)(pos.getY()-rad), (int)dia, (int)dia);
 	}
 
+	@Override
+	public void move(Vec2d t) {
+
+	}
+
 }

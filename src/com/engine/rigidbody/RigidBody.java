@@ -84,4 +84,6 @@ abstract public class RigidBody implements Cloneable {
 
 //	abstract public void collide(RigidBody other);
 	abstract public void draw(Graphics2D g2d);
+	abstract public void move(Vec2d t);
+
 }

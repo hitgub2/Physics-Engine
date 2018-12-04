@@ -59,9 +59,19 @@ public class Polygon extends RigidBody implements Cloneable {
 			x[i] = (int)pos.getX() + (int)(cos * xi[i] + sin * yi[i]);
 			y[i] = (int)pos.getY() + (int)(-sin * xi[i] + cos * yi[i]);
 		}
-		g2d.fillPolygon(x, y, nVertices);
+		g2d.drawPolygon(x, y, nVertices);
 	}
 
 	public int[] getX() { return this.x; }
 	public int[] getY() { return this.y; }
+
+	@Override
+	public void move(Vec2d t) {
+		int mx = (int)t.getX();
+		int my = (int)t.getY();
+		for(int i = 0; i < nVertices; i++) {
+			x[i] += mx;
+			y[i] += my;
+		}
+	}
 }

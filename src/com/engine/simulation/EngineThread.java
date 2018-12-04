@@ -8,7 +8,7 @@ public class EngineThread extends Thread {
 	private long tLapse = 0;
 	private long curT = 0;
 	private long lastT = 0;
-	private float unitT = 0.0f;
+	private double unitT = 0.0;
 	private Manager manager;
 
 	public EngineThread() {
@@ -44,15 +44,19 @@ public class EngineThread extends Thread {
 		int nRigidBodies = manager.getNumOfRigidBodies();
 		RigidBody rigidBody;
 		for(int i = 0; i < nRigidBodies; i++) {
-			rigidBody = manager.getRigidBody(i);
-			rigidBody.pos().add(rigidBody.velX() * unitT, rigidBody.velY() * unitT);
-			rigidBody.setTheta((rigidBody.theta() + rigidBody.angular() * unitT) % (2 * Math.PI));
+            rigidBody = manager.getRigidBody(i);
+
+            rigidBody.pos().add(rigidBody.velX() * unitT, rigidBody.velY() * unitT);
+            rigidBody.move(rigidBody.vel().mul(unitT));
+            rigidBody.setTheta((rigidBody.theta() + rigidBody.angular() * unitT) % (2 * Math.PI));
 
 			for(int j=i+1; j<nRigidBodies; j++) {
 				RigidBody other = manager.getRigidBody(j);
                 Boolean isCollide = new Gjk().collision(rigidBody, other);
                 if(isCollide) {
                     inelastic_collision(rigidBody, other);
+                    rigidBody.move(rigidBody.vel().mul(unitT));
+                    other.move(other.vel().mul(unitT));
                 }
 			}
 		}
@@ -70,13 +74,20 @@ public class EngineThread extends Thread {
 
         double totalMass = m1 + m2;
         double vi1, vi2, vf1, vf2;
+
         for(int i = 0; i < Config.DIMENSION; i++) {
             vi1 = v1.getComponent(i);
             vi2 = v2.getComponent(i);
             vf1 = 	((m1 - m2 * Config.RESTITUTION_COEFF) *  vi1 + (m2 * COEF) 	* vi2) / totalMass;
             vf2 = 	((m1 * COEF) * vi1 + (m2 - m1 * Config.RESTITUTION_COEFF) * vi2) / totalMass;
-            v1.setComponent(i, vf1);
-            v2.setComponent(i, vf2);
+            a.vel().setComponent(i, vf1);
+            b.vel().setComponent(i, vf2);
+        }
+
+        if(a.velX() > 0.1 || a.velX() < -0.1) {
+
+            a.pos().print();
+            b.pos().print();
         }
     }
 
