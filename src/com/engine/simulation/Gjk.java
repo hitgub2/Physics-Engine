@@ -2,6 +2,7 @@ package com.engine.simulation;
 
 import com.engine.rigidbody.Circle;
 import com.engine.rigidbody.Polygon;
+import com.engine.rigidbody.RigidBody;
 
 public class Gjk {
     public static final int MAX_ITERATION = 20;
@@ -222,27 +223,6 @@ public class Gjk {
         simplex.count = 3;
     }
 
-    public boolean collisionPP(Polygon a, Polygon b) {
-        Gjk.Output output = new Gjk().distance(a.getX(), a.getY(), b.getX(), b.getY());
-
-        if(output.distance < 0.0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public boolean collisionPC(Polygon a, Circle b) {
-
-        return true;
-    }
-
-    public boolean collisionCC(Circle a, Circle b) {
-
-        return true;
-    }
-
     public final Output distance(final int[] xA, final int[] yA, final int[] xB, final int[] yB) {
         Output output = new Output();
         Simplex simplex = new Simplex();
@@ -341,4 +321,49 @@ public class Gjk {
         public Vec2d point2 = new Vec2d();
         public double distance;
     }
+
+
+
+    public boolean collisionPP(Polygon a, Polygon b) {
+        Gjk.Output output = new Gjk().distance(a.getX(), a.getY(), b.getX(), b.getY());
+
+        if(output.distance == 0.0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean collisionPC(Polygon a, Circle b) {
+
+        return false;
+    }
+
+    public boolean collisionCC(Circle a, Circle b) {
+
+        return false;
+    }
+
+    public boolean collision(RigidBody a, RigidBody b) {
+        Boolean ret = false;
+        if(a.type() == Config.TYPE_POLYGON) {
+            if(b.type() == Config.TYPE_POLYGON) {
+                ret = collisionPP((Polygon)a, (Polygon)b);
+            }
+            else if(b.type() == Config.TYPE_CIRCLE) {
+                ret = collisionPC((Polygon)a, (Circle)b);
+            }
+        }
+        else if(a.type() == Config.TYPE_CIRCLE) {
+            if(b.type() == Config.TYPE_POLYGON) {
+                ret = collisionPC((Polygon)b, (Circle)a);
+            }
+            else if(b.type() == Config.TYPE_CIRCLE) {
+                ret = collisionCC((Circle) a, (Circle)b);
+            }
+        }
+        return ret;
+    }
+
 }

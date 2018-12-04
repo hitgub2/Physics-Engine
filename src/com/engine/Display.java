@@ -154,9 +154,10 @@ public class Display extends Canvas implements Runnable, Config {
 //		manager.addWall(new VerticalWall("x = " + DP_RIGHT, DP_RIGHT));
 
 
-		manager.addRigidBody(new Circle(	"A", new Vec2d(400, 50), new Vec2d(-30, -30), gravitionalAcc, 0, 1, 1, 20));
-		manager.addRigidBody(new Polygon(	"B", new int[] {100, 120, 120, 100},	new int[] {100, 100, 120, 120},	new Vec2d(20, 0),	gravitionalAcc, 0, 1, 1));
-		manager.addRigidBody(new Polygon(	"C", new int[] {0, 30, 30, 0}, 			new int[] {50, 50, 70, 70}, 	new Vec2d(60, -20),	gravitionalAcc, 0, 1, 1));
+		//manager.addRigidBody(new Circle(	"A", new Vec2d(400, 50), new Vec2d(-30, -30), gravitionalAcc, 0, 1, 1, 20));
+		manager.addRigidBody(new Polygon(	"B", new int[] {100, 140, 140, 100},	new int[] {100, 100, 140, 140},	new Vec2d(10, 0),	gravitionalAcc, 0, 0, 1));
+		manager.addRigidBody(new Polygon(	"D", new int[] {240, 280, 280, 240},	new int[] {100, 100, 140, 140},	new Vec2d(-10, 0),	gravitionalAcc, 0, 0, 1));
+		//manager.addRigidBody(new Polygon(	"C", new int[] {0, 30, 30, 0}, 		new int[] {50, 50, 70, 70}, 	new Vec2d(60, -20),gravitionalAcc, 0, 1, 1));
 		manager.setInitialConditions();
 //		manager.printInitialConditions();
 
@@ -217,22 +218,9 @@ public class Display extends Canvas implements Runnable, Config {
 		g2d.setColor(Color.BLACK);
 		for (int i = 0; i < numOfRigidBodies; i++) {
 			rb = manager.getRigidBody(i);
+			if (rb.getName().equals("D")) g2d.setColor(Color.RED);
 			rb.draw(g2d);
 		}
-
-		int[] xA = new int[] {70, 120, 120, 100};
-		int[] yA = new int[] {70, 100, 120, 120};
-
-		g2d.drawPolygon(xA, yA, 4);
-		int[] xB = new int[] {0, 30, 30, 0};
-		int[] yB = new int[] {50, 50, 70, 70};
-		g2d.drawPolygon(xB, yB, 4);
-
-		Gjk.Output output = new Gjk().distance(xA, yA, xB, yB);
-
-		g2d.drawLine((int)output.point1.getX(), (int)output.point1.getY(), (int)output.point2.getX(), (int)output.point2.getY());
-
-
 
 		g = bs.getDrawGraphics();
 		g.drawImage(buffer, 0, 0, null);

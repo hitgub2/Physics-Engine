@@ -19,7 +19,7 @@ public class EngineThread extends Thread {
 		curT = System.currentTimeMillis();
 		while(Display.running) {
 			updateTime();
-			accelerate();
+			//accelerate();
 			nextMove();
 		}
 	}
@@ -50,10 +50,35 @@ public class EngineThread extends Thread {
 
 			for(int j=i+1; j<nRigidBodies; j++) {
 				RigidBody other = manager.getRigidBody(j);
-
+                Boolean isCollide = new Gjk().collision(rigidBody, other);
+                if(isCollide) {
+                    inelastic_collision(rigidBody, other);
+                }
 			}
 		}
 	}
+
+
+    final float COEF = Config.RESTITUTION_COEFF + 1f;	//(1 + e)
+
+
+    private void inelastic_collision(RigidBody a, RigidBody b) {
+        double m1 = a.mass();
+        double m2 = b.mass();
+        Vec2d v1 = a.vel();
+        Vec2d v2 = b.vel();
+
+        double totalMass = m1 + m2;
+        double vi1, vi2, vf1, vf2;
+        for(int i = 0; i < Config.DIMENSION; i++) {
+            vi1 = v1.getComponent(i);
+            vi2 = v2.getComponent(i);
+            vf1 = 	((m1 - m2 * Config.RESTITUTION_COEFF) *  vi1 + (m2 * COEF) 	* vi2) / totalMass;
+            vf2 = 	((m1 * COEF) * vi1 + (m2 - m1 * Config.RESTITUTION_COEFF) * vi2) / totalMass;
+            v1.setComponent(i, vf1);
+            v2.setComponent(i, vf2);
+        }
+    }
 
 //	private synchronized void isWallCollision(Thing t) {
 //		float maxX = Config.DP_WIDTH;

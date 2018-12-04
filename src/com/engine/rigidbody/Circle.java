@@ -2,6 +2,7 @@ package com.engine.rigidbody;
 
 import java.awt.Graphics2D;
 
+import com.engine.simulation.Config;
 import com.engine.simulation.Vec2d;
 
 public class Circle extends RigidBody implements Cloneable {
@@ -10,8 +11,10 @@ public class Circle extends RigidBody implements Cloneable {
 
 	public Circle(String name, Vec2d pos, Vec2d vel, Vec2d acc, double theta, double angular, double mass, double rad) {
 		super(name, pos, vel, acc, theta, angular, mass);
+		super.type = Config.TYPE_CIRCLE;
 		this.rad = rad;
 		this.dia = 2 * rad;
+
 	}
 	@Override
 	public void set(RigidBody other) {

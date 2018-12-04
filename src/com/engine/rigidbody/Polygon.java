@@ -2,6 +2,7 @@ package com.engine.rigidbody;
 
 import java.awt.Graphics2D;
 
+import com.engine.simulation.Config;
 import com.engine.simulation.Vec2d;
 
 public class Polygon extends RigidBody implements Cloneable {
@@ -15,7 +16,7 @@ public class Polygon extends RigidBody implements Cloneable {
 		inertia = 1d;
 		this.x = x;
 		this.y = y;
-		super.type = TYPE_POLYGON;
+		super.type = Config.TYPE_POLYGON;
 
 		int xp = (int)pos.getX();
 		int yp = (int)pos.getY();

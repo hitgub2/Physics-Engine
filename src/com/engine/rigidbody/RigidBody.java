@@ -16,10 +16,6 @@ abstract public class RigidBody implements Cloneable {
 	protected boolean isFixed;
 	protected int type;
 
-	final protected static int TYPE_NONE = 0;
-	final protected static int TYPE_CIRCLE = 1;
-	final protected static int TYPE_POLYGON = 2;
-
 	protected RigidBody(String name, Vec2d pos, Vec2d vel, Vec2d acc, double theta, double angular, double mass) {
 		this.name = name;
 		this.pos = pos;
